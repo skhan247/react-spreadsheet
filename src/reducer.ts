@@ -27,6 +27,9 @@ export const INITIAL_STATE: Types.StoreState = {
   selected: new EmptySelection(),
   copied: null,
   lastCommit: null,
+  editingHeader: null,
+  columnLabels: undefined,
+  rowLabels: undefined,
 };
 
 export default function reducer(
@@ -331,6 +334,33 @@ export default function reducer(
       const { changes } = action.payload;
       return { ...state, ...commit(changes) };
     }
+    case Actions.EDIT_COLUMN_HEADER: {
+      const { column } = action.payload;
+      return {
+        ...state,
+        editingHeader: {
+          type: 'column',
+          index: column
+        }
+      };
+    }
+    
+    case Actions.SET_COLUMN_HEADER_VALUE: {
+      const { column, value } = action.payload;
+      const columnLabels = state.columnLabels ? [...state.columnLabels] : [];
+      columnLabels[column] = value;
+      return {
+        ...state,
+        columnLabels
+      };
+    }
+    
+    case Actions.COMMIT_COLUMN_HEADER: {
+      return {
+        ...state,
+        editingHeader: null
+      };
+    }
 
     default:
       throw new Error("Unknown action");
@@ -393,7 +423,12 @@ function clear(state: Types.StoreState): Types.StoreState {
 }
 
 function blur(state: Types.StoreState): Types.StoreState {
-  return { ...state, active: null, selected: new EmptySelection() };
+  return { 
+    ...state, 
+    active: null, 
+    selected: new EmptySelection(),
+    editingHeader: null
+  };
 }
 
 function view(state: Types.StoreState): Types.StoreState {

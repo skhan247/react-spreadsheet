@@ -61,6 +61,9 @@ export type StoreState<Cell extends CellBase = CellBase> = {
   dragging: boolean;
   lastChanged: Point | null;
   lastCommit: null | CellChange<Cell>[];
+  editingHeader: HeaderEditingState | null;
+  columnLabels?: string[];
+  rowLabels?: string[];
 };
 
 export type CellChange<Cell extends CellBase = CellBase> = {
@@ -209,3 +212,48 @@ export type CommitChanges<Cell extends CellBase = CellBase> = Array<{
 }>;
 
 export type CreateFormulaParser = (data: Matrix<CellBase>) => FormulaParser;
+
+// Add to StoreState interface:
+export type HeaderEditingState = {
+  type: 'column' | 'row';
+  index: number;
+};
+
+// Add this to StoreState interface
+// editingHeader: HeaderEditingState | null;
+// columnLabels?: string[];
+// rowLabels?: string[];
+
+/** Type of the Spreadsheet ColumnIndicator component props with editing capabilities */
+export type ColumnIndicatorProps = {
+  /** The column the indicator indicates */
+  column: number;
+  /** A custom label for the indicator as provided in columnLabels */
+  label?: React.ReactNode | null;
+  /** Whether the entire column in selected */
+  selected: boolean;
+  /** Callback to be called when the column is selected */
+  onSelect: (column: number, extend: boolean) => void;
+  /** Whether the column header is currently being edited */
+  editMode?: boolean;
+  /** Callback to be called when the column header edit mode is activated */
+  onEdit?: (column: number) => void;
+  /** Current value in the editor */
+  editorValue?: string;
+  /** Callback to be called when the editor value changes */
+  onEditorValueChange?: (column: number, value: string) => void;
+  /** Callback to be called when the editor loses focus */
+  onEditorBlur?: () => void;
+};
+
+/** Type of props for the column header editor component */
+export type ColumnIndicatorEditorProps = {
+  /** The column index being edited */
+  column: number;
+  /** The current value being edited */
+  value?: string;
+  /** Callback for when the value changes */
+  onChange: (column: number, value: string) => void;
+  /** Callback for when editing should finish */
+  onBlur: () => void;
+};

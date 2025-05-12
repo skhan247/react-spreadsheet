@@ -173,8 +173,10 @@ const Spreadsheet = <SpreadsheetRef, CellType extends Types.CellBase>(
       ...INITIAL_STATE,
       model,
       selected: props.selected || INITIAL_STATE.selected,
+      columnLabels: props.columnLabels, // Add this line
+      rowLabels: props.rowLabels,      // And this line
     } as State;
-  }, [props.createFormulaParser, props.data, props.selected]);
+  }, [props.createFormulaParser, props.data, props.selected, props.columnLabels, props.rowLabels]);
 
   const reducerElements = React.useReducer(
     reducer as unknown as React.Reducer<State, Actions.Action>,
@@ -489,7 +491,7 @@ const Spreadsheet = <SpreadsheetRef, CellType extends Types.CellBase>(
                   key={columnNumber}
                   column={columnNumber}
                   label={
-                    columnNumber in columnLabels
+                    columnLabels && columnNumber in columnLabels
                       ? columnLabels[columnNumber]
                       : null
                   }

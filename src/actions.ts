@@ -30,6 +30,9 @@ export const KEY_DOWN = "KEY_DOWN";
 export const DRAG_START = "DRAG_START";
 export const DRAG_END = "DRAG_END";
 export const COMMIT = "COMMIT";
+export const EDIT_COLUMN_HEADER = "EDIT_COLUMN_HEADER";
+export const SET_COLUMN_HEADER_VALUE = "SET_COLUMN_HEADER_VALUE";
+export const COMMIT_COLUMN_HEADER = "COMMIT_COLUMN_HEADER";
 
 export type BaseAction<T extends string> = {
   type: T;
@@ -276,6 +279,41 @@ export function blur(): BlurAction {
   return { type: BLUR };
 }
 
+export type EditColumnHeaderAction = BaseAction<typeof EDIT_COLUMN_HEADER> & {
+  payload: {
+    column: number;
+  };
+};
+
+export function editColumnHeader(column: number): EditColumnHeaderAction {
+  return {
+    type: EDIT_COLUMN_HEADER,
+    payload: { column },
+  };
+}
+
+export type SetColumnHeaderValueAction = BaseAction<typeof SET_COLUMN_HEADER_VALUE> & {
+  payload: {
+    column: number;
+    value: string;
+  };
+};
+
+export function setColumnHeaderValue(column: number, value: string): SetColumnHeaderValueAction {
+  return {
+    type: SET_COLUMN_HEADER_VALUE,
+    payload: { column, value },
+  };
+}
+
+export type CommitColumnHeaderAction = BaseAction<typeof COMMIT_COLUMN_HEADER>;
+
+export function commitColumnHeader(): CommitColumnHeaderAction {
+  return {
+    type: COMMIT_COLUMN_HEADER,
+  };
+}
+
 export type Action =
   | SetDataAction
   | SetCreateFormulaParserAction
@@ -299,3 +337,6 @@ export type Action =
   | ViewAction
   | ClearAction
   | BlurAction;
+  | EditColumnHeaderAction;
+  | SetColumnHeaderValueAction;
+  | CommitColumnHeaderAction;
