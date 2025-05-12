@@ -121,6 +121,7 @@ export type Props<CellType extends Types.CellBase> = {
   ) => void;
   /** Callback called when the Spreadsheet's evaluated data changes. */
   onEvaluatedDataChange?: (data: Matrix.Matrix<CellType>) => void;
+  onColumnLabelsChange?: (labels: string[]) => void;
 };
 
 /**
@@ -162,6 +163,7 @@ const Spreadsheet = <SpreadsheetRef, CellType extends Types.CellBase>(
     onBlur = () => {},
     onCellCommit = () => {},
     onEvaluatedDataChange = () => {},
+    onColumnLabelsChange = () => {}
   } = props;
   type State = Types.StoreState<CellType>;
 
