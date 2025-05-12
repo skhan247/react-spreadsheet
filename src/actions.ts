@@ -336,7 +336,7 @@ export type Action =
   | EditAction
   | ViewAction
   | ClearAction
-  | BlurAction;
-  | EditColumnHeaderAction;
-  | SetColumnHeaderValueAction;
+  | BlurAction
+  | EditColumnHeaderAction
+  | SetColumnHeaderValueAction
   | CommitColumnHeaderAction;

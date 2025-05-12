@@ -178,18 +178,6 @@ export type RowIndicatorProps = {
 /** Type of the RowIndicator component */
 export type RowIndicatorComponent = React.ComponentType<RowIndicatorProps>;
 
-/** Type of the Spreadsheet ColumnIndicator component props */
-export type ColumnIndicatorProps = {
-  /** The column the indicator indicates */
-  column: number;
-  /** A custom label for the indicator as provided in columnLabels */
-  label?: React.ReactNode | null;
-  /** Whether the entire column in selected */
-  selected: boolean;
-  /** Callback to be called when the column is selected */
-  onSelect: (column: number, extend: boolean) => void;
-};
-
 /** Type of the ColumnIndicator component */
 export type ColumnIndicatorComponent =
   React.ComponentType<ColumnIndicatorProps>;

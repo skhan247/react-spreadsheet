@@ -479,6 +479,16 @@ const Spreadsheet = <SpreadsheetRef, CellType extends Types.CellBase>(
     };
   }, [handleCut, handleCopy, handlePaste]);
 
+  const prevColumnLabelsRef = React.useRef<string[] | undefined>(state.columnLabels);
+  React.useEffect(() => {
+    if (state.columnLabels !== prevColumnLabelsRef.current) {
+      if (onColumnLabelsChange && state.columnLabels) {
+        onColumnLabelsChange(state.columnLabels);
+      }
+    }
+  prevColumnLabelsRef.current = state.columnLabels;
+}, [state.columnLabels, onColumnLabelsChange]);
+
   const tableNode = React.useMemo(
     () => (
       <Table columns={size.columns} hideColumnIndicators={hideColumnIndicators}>
